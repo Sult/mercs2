@@ -1,0 +1,62 @@
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        {# lookups #}
+        <li {% if request.path == "/character/" %} class="active" {% endif %} >
+            <a href="{% url 'character' %}"><i class="fa fa-fw fa-info"></i> Character</a>
+        </li>
+        <li {% if request.path == "/fitting/" %} class="active" {% endif %} >
+            <a href="{% url 'fitting' %}"><i class="fa fa-fw fa-fighter-jet"></i> Ship Fitting</a>
+        </li>
+        <li {% if request.path == "/hangar/" %} class="active" {% endif %} >
+            <a href="{% url 'hangar' %}"><i class="fa fa-fw fa-sign-in"></i> Hangar</a>
+        </li>
+        
+        {# Actions #}
+        <li {% if request.path == "/travel/" %} class="active" {% endif %} >
+            <a href="{% url 'travel' %}"><i class="fa fa-fw fa-plane"></i> Travel</a>
+        </li>
+        
+        
+        
+        {% comment %}
+        <li {% if request.path == "/training/" %} class="active" {% endif %} >
+            <a href="#"><i class="fa fa-fw fa-fighter-jet"></i> Training</a>
+        </li>
+        <li>
+            <a href="charts.html"><i class="fa fa-fw fa-fighter-jet"></i> Hangar</a>
+        </li>
+        <li>
+            <a href="tables.html"><i class="fa fa-fw fa-truck"></i> Storage</a>
+        </li>
+        <li>
+            <a href="forms.html"><i class="fa fa-fw fa-plane"></i> Travel</a>
+        </li>
+        <li>
+            <a href="bootstrap-elements.html"><i class="fa fa-fw fa-shopping-cart"></i> Shop</a>
+        </li>
+        <li>
+            <a href="bootstrap-grid.html"><i class="fa fa-fw fa-cogs"></i> Factory</a>
+        </li>
+        <li>
+            <a href="javascript:;" data-toggle="collapse" data-target="#information"><i class="fa fa-fw fa-book"></i> Information <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="information" class="collapse">
+                <li>
+                    <a href="#" target="_blank"><i class="fa fa-fw fa-search"></i> library</a>
+                </li>
+                <li>
+                    <a href="#">Dropdown Item</a>
+                </li>
+            </ul>
+        </li>
+<!--
+            <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+-->
+        
+        </li>
+        
+        <li>
+            <a href="blank-page.html"> Blank Page</a>
+        </li>
+        {% endcomment %}
+    </ul>
+</div>

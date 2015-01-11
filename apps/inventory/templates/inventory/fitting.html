@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load character_tags %}
+{% load add_css %}
+
+
+{% block page_title %}Mercenaries - Ship Fitting{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-md-10">
+        <h1 class="page-header">Ship Fitting</h1>
+    </div>
+</div>
+
+<div clas="row">
+    <div class="col-md-10">
+    <h4>Active Ship</h4>
+    {% include "messages.html" %}
+        <table class="table table-bordered">
+            <thead>
+                <tr class="text-center">
+                    <th>Type</th>
+                    <th>Tier</th>
+                    <th>Weapons</th>
+                    <th>Good vs</th>
+                    <th>Bad vs</th>
+                    <th>Hitpoints</th>
+                    <th>Armor</th>
+                    <th>Warp</th>
+                    <th>Cargo Space</th>
+                    <th>Smuggle Bay</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-center">
+                    <td>{{ ship.template.get_ship_type_display }}</td>
+                    <td>{{ ship.template.get_tier_display }}</td>
+                    <td>{{ ship.weapons }}</td>
+                    <td>{{ ship.get_good_vs_display }}</td>
+                    <td>{{ ship.get_bad_vs_display }}</td>
+                    <td>{{ ship.hitpoints_max|intcomma }}</td>
+                    <td>{{ ship.armor|intcomma }}</td>
+                    <td>Warp {{ ship.warp }}</td>
+                    <td>{{ ship.cargo_space|intcomma }} m<sup>3</sup></td>
+                    <td>{{ ship.smuggle_bay|intcomma }} m<sup>3</sup></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        {% if not ship.fitted_set.count == 0 %}
+        <h4>Fitted Weapons</h4>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th>Type</th>
+                    <th>Range</th>
+                    <th>Minimal Damage</th>
+                    <th>Maximal Damage</th>
+                    <th>Accuracy</th>
+                    <th>Critical</th>
+                    <th colspan="2">Clip</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wep in ship.fitted_set.all %}
+                <tr class="text-center">
+                    <td>{{ wep.weapon.template.get_weapon_type_display }}</td>
+                    <td>{{ wep.weapon.template.get_distance_display }}</td>
+                    <td>{{ wep.weapon.damage_min|intcomma }}</td>
+                    <td>{{ wep.weapon.damage_max|intcomma }}</td>
+                    <td>{{ wep.weapon.show_accuracy }}%</td>
+                    <td>{{ wep.weapon.show_critical }}%</td>
+                    <td>{{ wep.weapon.clip }}</td>
+                    <td>
+                        <a href="{% url 'deactivate_weapon' wep.id %}">deactivate</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+        
+        
+    </div>
+</div>
+
+
+<div clas="row">
+    <div class="col-md-10">
+        <br>
+        <h4>Weapons on {{ planet }}</h4>
+        <form action="{% url 'fitting' %}" method="post" role="hangar-filter">{% csrf_token %}
+            <div class="row form-group">
+                
+                {% for field in filter_form %}
+                <div class="col-md-2">
+                    <label>{{ field.label }}</label>
+                    {{ field|addcss:"form-control" }}
+                </div>
+                {% endfor %}
+                <div class="col-md-2 v-offset-top-2 ">
+                    <button type="submit" class="btn btn-default btn-md">Filter</button>
+                </div>
+            </div>
+        </form>
+        <form action="{% url 'fitting_actions' %}" method="post" role="hangar">{% csrf_token %}
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>Type</th>
+                        <th>Range</th>
+                        <th>Size</th>
+                        <th>Tier</th>
+                        <th>Minimal Damage</th>
+                        <th>Maximal Damage</th>
+                        <th>Accuracy</th>
+                        <th>Critical</th>
+                        <th colspan="2">Clip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for weapon in weapons.object_list %}
+                    <tr class="text-center">
+                        <td>{{ weapon.template.get_weapon_type_display }}</td>
+                        <td>{{ weapon.template.get_distance_display }}</td>
+                        <td>{{ weapon.template.get_size_display }}</td>
+                        <td>{{ weapon.template.get_tier_display }}</td>
+                        <td>{{ weapon.damage_min|intcomma }}</td>
+                        <td>{{ weapon.damage_max|intcomma }}</td>
+                        <td>{{ weapon.show_accuracy }}%</td>
+                        <td>{{ weapon.show_critical }}%</td>
+                        <td>{{ weapon.clip }}</td>
+                        <td>
+                            <a href="{% url 'activate_weapon' weapon.id %}">activate</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        <div id="pagination" class="text-center">
+            {{ weapons.render }}
+        </div>
+    </div
+</div>
+{% endblock %}
+

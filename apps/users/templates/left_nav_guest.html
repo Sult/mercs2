@@ -1,0 +1,10 @@
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        <li {% if request.path == "/" or request.path == "/register/" %} class="active" {% endif %}>
+            <a href="{% url 'index' %}"> Home</a>
+        </li>
+        <li {% if request.path == "/contact/" %} class="active" {% endif %} >
+            <a href="{% url 'contact' %}"> Contact</a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block page_title %}Mercenaries - Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+show some articles
+
+
+
+{% else %}
+<div>
+    <p>
+        Welcome to Mercenaries. The place to travel space, fight rebels and more balblabla jeweetwel onzin zooi.
+    </p>
+    <p>
+        What? You dont have an account yet? Do not worry, registration is simple!<br>
+        <a href="{% url 'register_user' %}" class="btn btn-primary btn-md" role="button">Register</a>
+    </p>
+    
+    
+</div>
+{% endif %}
+{% endblock %}

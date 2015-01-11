@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block page_title %}Mercenaries - Character{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">{{ character.name }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-md-4">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Information</h3>
+            </div>
+        
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Rank</td>
+                                <td><a href="#" >{{ character.rank.title}}</a></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    Experience
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" style="width: {{ character.xp_progress }}%;">
+                                            <span>{{ character.xp_progress }}%</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Location</td>
+                                <td><a href="{% url 'travel' %}" >{{ character.planet.name }}</a></td>
+                            </tr>
+                            <tr>
+                                <td>Created</td>
+                                <td>{{ character.created }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Inventory</h3>
+            </div>
+        
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Cash</td>
+                                <td>{{ character.money|intcomma }} Mny</td>
+                            </tr>
+                            <tr>
+                                <td>Bodygaurds</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

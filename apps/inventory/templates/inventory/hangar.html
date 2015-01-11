@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load character_tags %}
+{% load add_css %}
+
+
+{% block page_title %}Mercenaries - Hangar{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-md-10">
+        <h1 class="page-header">{{ character.planet.name }} Hangar</h1>
+    </div>
+</div>
+
+<div clas="row">
+    <div class="col-md-10">
+    <h4>Current Ship</h4>
+    {% include "messages.html" %}
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th>Type</th>
+                        <th>Tier</th>
+                        <th>Weapons</th>
+                        <th>Good vs</th>
+                        <th>Bad vs</th>
+                        <th>Hitpoints</th>
+                        <th>Armor</th>
+                        <th>Warp</th>
+                        <th>Cargo Space</th>
+                        <th>Smuggle Bay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td>{{ active.template.get_ship_type_display }}</td>
+                        <td>{{ active.template.get_tier_display }}</td>
+                        <td>{{ active.weapons }}</td>
+                        <td>{{ active.good_vs }}</td>
+                        <td>{{ active.bad_vs }}</td>
+                        <td>{{ active.hitpoints_max|intcomma }}</td>
+                        <td>{{ active.armor|intcomma }}</td>
+                        <td>Warp {{ active.warp }}</td>
+                        <td>{{ active.cargo_space|intcomma }} m<sup>3</sup></td>
+                        <td>{{ active.smuggle_bay|intcomma }} m<sup>3</sup></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <h4>Ships on {{ planet }}</h4>
+            <form action="{% url 'hangar' %}" method="post" role="hangar-filter">{% csrf_token %}
+                <div class="row form-group">
+                    {% for field in filter_form %}
+                    <div class="col-md-2">
+                        <label>{{ field.label }}</label>
+                        {{ field|addcss:"form-control" }}
+                    </div>
+                    {% endfor %}
+
+                    <div class="col-md-2 v-offset-top-2 ">
+                        <button type="submit" class="btn btn-default btn-md">Filter</button>
+                    </div>
+                </div>
+            </form>
+                
+            <form action="{% url 'hangar_actions' %}" method="post" role="hangar">{% csrf_token %}
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr class="text-center">
+                            <th colspan="2">Type</th>
+                            <th>Tier</th>
+                            <th>Weapons</th>
+                            <th>Good vs</th>
+                            <th>Bad vs</th>
+                            <th>Hitpoints</th>
+                            <th>Armor</th>
+                            <th>Warp</th>
+                            <th>Cargo Space</th>
+                            <th colspan="2">Smuggle Bay</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ship in ships.object_list %}
+                        <tr class="text-center">
+                            <td>
+                                <input type="checkbox" name="ships" value="{{ ship.pk }}">
+                                </td>
+                            <td>{{ ship.template.get_ship_type_display }}</td>
+                            <td>{{ ship.template.get_tier_display }}</td>
+                            <td>{{ ship.weapons }}</td>
+                            <td>{{ ship.get_good_vs_display }}</td>
+                            <td>{{ ship.get_bad_vs_display }}</td>
+                            <td>{{ ship.hitpoints_max|intcomma }}</td>
+                            <td>{{ ship.armor|intcomma }}</td>
+                            <td>Warp {{ ship.warp }}</td>
+                            <td>{{ ship.cargo_space|intcomma }} m<sup>3</sup></td>
+                            <td>{{ ship.smuggle_bay|intcomma }} m<sup>3</sup></td>
+                            {% if ship.planet == character.planet %}
+                            <td>
+                                <a href="{% url 'activate_ship' ship.id %}">activate</a>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div id="pagination" class="text-center">
+            {{ ships.render }}
+        </div
+    </div>
+</div>
+{% endblock %}

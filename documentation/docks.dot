@@ -1,0 +1,47 @@
+
+
+graph World{
+Zaqfag [label="Zaqfag" shape=box];      //1
+Yodon [label="Yodon" shape=box];        //2
+Branbu [label="Branbu" shape=box];      //3
+Cuipholn [label="Cuipholn" shape=box];  //4
+Plille [label="Plille" shape=box];      //5
+Grinard [label="Grinard" shape=box];    //6
+Klico [label="Klico" shape=box];        //7
+Ylathe [label="Ylathe" shape=box];      //8
+Juosh [label="Juosh" shape=box];        //9
+Jiedran [label="Jiedran" shape=box];    //10
+Henk [label="Henk" shape=box];          //11
+Gizora [label="Gizora" shape=box];      //12
+Kladoi [label="Kladoi" shape=box];      //13
+
+
+
+Yodon -- Branbu
+Yodon -- Cuipholn
+Yodon -- Grinard
+Yodon -- Juosh
+
+Branbu -- Plille
+Branbu -- Grinard
+Branbu -- Klico
+
+Zaqfag -- Yodon
+Zaqfag -- Branbu
+Zaqfag -- Cuipholn
+Zaqfag -- Plille
+
+Plille -- Cuipholn
+Plille -- Klico
+Plille -- Ylathe
+
+Cuipholn -- Ylathe
+Cuipholn -- Juosh
+
+Ylathe -- Gizora
+Juosh -- Kladoi
+Grinard -- Jiedran
+Klico -- Henk
+
+
+}

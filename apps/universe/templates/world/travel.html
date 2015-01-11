@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load add_css %}
+{% load humanize %}
+{% load character_tags %}
+
+{% block page_title %}Mercenaries - Travel{% endblock %}
+
+{% block content %}
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-md-6">
+        <h1 class="page-header">Travel</h1>
+    </div>
+</div>
+
+<div clas="row">
+    <div class="col-md-6">
+        {% if not character.timers|check_timer:"travel" %}
+        <p>
+            poep
+        </p>
+        {% else %}
+        <p>
+            You are currently on the planet {{ character.planet.name }}.<br>
+            Please select where you want to travel.
+        </p>
+        
+        <div class="table-responsive row">
+            <div class="col-md-10">
+            <form action="{% url 'travel' %}" method="post" role="travel-form">{% csrf_token %}
+                <table class="table">
+                    <tbody>
+                        {% for field in travel_form %}
+                        <tr>
+                            <td>
+                                <input type="radio" name="destination" value="{{ field.pk }}"> {{ field.name }}
+                            </td>
+                            <td>{{ field.cost|intcomma }} Mny</td>
+                            <td>{{ field.duration|humanize_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-default btn-md pull-right">Travel</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

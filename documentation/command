@@ -1,0 +1,8 @@
+dot -Tpng kut.dot > kut.png
+
+
+better pagination
+https://github.com/jamespacileo/django-pure-pagination
+pagination store in session
+http://stackoverflow.com/questions/23596433/how-to-store-a-queryset-in-django-session-for-pagination
+https://gist.github.com/bsnux/4672788
